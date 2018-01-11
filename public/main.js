@@ -4,13 +4,17 @@ let TAPabi = [ { "constant": true, "inputs": [], "name": "name", "outputs": [ { 
 let TAPaddress = "0x6e4f912249890FF662582D2b08C0891586aee742";
 let TAP;
 
+const web3 = require('web3');
+
+const TAPP = {
+
 window.addEventListener('load', function() {
-  if (typeof web3 !== 'undefined') {
-    console.log("Using external provider.");
+  if (typeof web3 !== 'undefined' && web3.version.network === 4) {
+    console.log("Using external provider on Rinkeby.");
     window.web3 = new Web3(web3.currentProvider);
   } else {
-    console.log("Using default provider"); //mostly for testing&debugging
-    window.web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/"));
+    console.warn("TAP is only accessible via the Rinkeby-Testnet"); //mostly for testing&debugging
+    //window.web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:9545"));
   }
   // Initialize Contract
   TAP = new web3.eth.Contract(TAPabi, TAPaddress);
