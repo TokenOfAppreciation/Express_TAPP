@@ -153,6 +153,26 @@ window.addEventListener('load', function() {
   Controller.init();
 });
 
-// document.getElementById('debug').addEventListener('click', function(){
-//
-// });
+//----Send TAP Button
+document.getElementById("SendTAP").addEventListener("click", function(){
+  if(web3.isAddress(document.getElementById("ReceiverAddress").value)) {
+    let receiverAddress = document.getElementById("ReceiverAddress").value;
+    //let senderAddress = web3.eth.defaultAccount;
+    tap.tap(receiverAddress, {gas: 200000}, (error, result) =>{
+      if (!error){
+        let txHash = result;
+        console.log(txHash);
+      } else {
+        console.log('Ooops, something went wrong')
+      }
+    });
+  } else {
+    console.log("Please enter a valid Ethereum Address")
+  }
+});
+
+
+//---- Debug button
+document.getElementById('debug').addEventListener('click', function(){
+
+});
