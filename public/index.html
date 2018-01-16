@@ -39,10 +39,11 @@
       nostrum in voluptatibus tempore. Ullam accusantium, molestiae? Vero quod explicabo saepe
       inventore illum est fugit aperiam qui?
     </p>
+    <h3>Account Data</h3>
     <ul class="list-group">
-      <ul class="list-group-item">Your current Address: <span id="UserAddress">N/A</span></ul>
-      <ul class="list-group-item">Validated: <span id="UserValidated">N/A</span></ul>
-      <ul class="list-group-item">Your TAPs: <span id="UserBalance">N/A</span>
+      <li class="list-group-item">Your current Address: <span id="UserAddress">N/A</span></li>
+      <li class="list-group-item">Validated: <span id="UserValidated">N/A</span></li>
+      <li class="list-group-item">Your TAPs: <span id="UserBalance">N/A</span></li>
     </ul>
     <br>
     <form>
@@ -54,14 +55,26 @@
   </form>
 
   <br>
-
+  <h3>Chain Data</h3>
   <ul class="list-group">
-    <ul class="list-group-item">Current Block: <span id="CurrentBlock">N/A</span></ul>
-    <ul class="list-group-item">Time Since last Block: <span id="TimeSinceLastBlock">N/A</span></ul>
-    <ul class="list-group-item">Network: <span id="Network">N/A</span>
+    <li class="list-group-item">Current Block: <span id="CurrentBlock">N/A</span></li>
+    <li class="list-group-item">Time Since last Block: <span id="TimeSinceLastBlock">N/A</span></li>
+    <li class="list-group-item">Network: <span id="Network">N/A</span></li>
   </ul>
 
-  <button class="btn btn-primary btn-block" type="" id="debug">Debug Load</button>
+  <br>
+  <!-- <button class="btn btn-primary btn-block" type="" id="debug">Debug Load</button> -->
+
+
+  <h3>Past Transactions</h3>
+  <ul class="list-group" id="EventWatcher">
+
+
+
+  </ul>
+
+
+
 
   </div>
   <script src="web3.min.js"></script>
