@@ -23,6 +23,13 @@ const Controller = {
   , setBalance : (balance) => {
     document.getElementById('UserBalance').innerHTML = balance;
   }
+  , addEvent : (sender, receiver) => {
+    dnEventWatcher = document.getElementById('EventWatcher');
+    dnNewEntry = document.createElement('li');
+    dnNewEntry.innerHTML = sender + "=>" + receiver;
+    dnNewEntry.classList.add('list-group-item');
+    dnEventWatcher.appendChild(dnNewEntry);
+  }
   , initTimer : () => {
     let seconds = 0;
     if (Controller.timer){
@@ -57,6 +64,8 @@ const Controller = {
 
 //---------------------------------------------------------------------
 
+
+
 window.addEventListener('load', function() {
   // Initialize connection to existing Web3 provider
   if ((typeof web3 !== 'undefined') && (web3.version.network === '4')) {
@@ -70,7 +79,7 @@ window.addEventListener('load', function() {
   // Initialize Contract
   TAP = web3.eth.contract(TAPabi);
   tap = TAP.at(TAPaddress);
-  console.log(tap.address);
+
   let defaultAccount = web3.eth.defaultAccount;
   if (!defaultAccount){
     web3.eth.defaultAccount = web3.eth.accounts[0];
@@ -83,7 +92,6 @@ window.addEventListener('load', function() {
       } else {
         Controller.setValidated("False");
       }
-      console.log(result);
     } else {
       Controller.setValidated("There was an error retrieving your status.");
     }
@@ -96,6 +104,34 @@ window.addEventListener('load', function() {
       console.log(error);
     }
   });
+
+  // ----- tapped
+  let tapEvent = tap.Tapped({},{fromBlock: 0, toBlock: 'latest'});
+  tapEvent.get(function(err,res){
+    if (!err){
+      res.forEach((transaction)=>{
+        if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
+        Controller.addEvent(transaction.args.sender, transaction.args.receiver);
+        }
+      });
+    } else {
+      console.log(err);
+    }
+  });
+
+  tapEvent.watch(function(err,res){
+    if (!err){
+        res.forEach((transaction)=>{
+          if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
+            Controller.addEvent(transaction.args.sender, transaction.args.receiver);
+          }
+        });
+    } else {
+      console.log(err);
+    }
+  });
+
+
 
   // TAP.isValidated().call('0x09F96270d12172633501D446F0f61B2E6d61d2d0', (err, res)=>{
   //   if (!err){
@@ -117,6 +153,6 @@ window.addEventListener('load', function() {
   Controller.init();
 });
 
-document.getElementById('debug').addEventListener('click', function(){
-
-});
+// document.getElementById('debug').addEventListener('click', function(){
+//
+// });
