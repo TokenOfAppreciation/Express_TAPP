@@ -12,7 +12,7 @@ const routes = require('./routes');
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
-mongoose.connect(process.env.MONGODB_URI);
+// mongoose.connect(process.env.MONGODB_URI);
 
 // -- middleware
 app.use(logger('short'));

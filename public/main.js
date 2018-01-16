@@ -11,15 +11,20 @@ console.log(Web3.version);
 // const web3 = require('web3');
 
 window.addEventListener('load', function() {
-  if (typeof Web3 !== 'undefined'  && Web3.version.network === '4') {
+  if ((typeof web3 !== 'undefined') && (web3.version.network === '4')) {
     console.log("Using external provider on Rinkeby.");
-    window.Web3 = new Web3(Web3.currentProvider);
+    window.web3 = new Web3(web3.currentProvider);
   } else {
-    console.warn("TAP is only accessible via the Rinkeby-Testnet"); //mostly for testing&debugging
-    // window.web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:9545"));
+    console.warn("TAP is only accessible via the Rinkeby-Testnet");
   }
   // Initialize Contract
+  console.log(window.web3.eth.accounts);
+
   TAP = new Web3.eth.Contract(TAPabi, TAPaddress);
+});
+
+document.getElementById('debug').addEventListener('click', function(){
+  
 });
 
 // Initialize Metamask or other provider
