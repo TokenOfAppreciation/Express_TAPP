@@ -73,6 +73,7 @@ ContractHandler = {
     });
     tapEvent.watch(function(err,res){
       if (!err){
+          console.log(res);
           res.forEach((transaction)=>{
             if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
               ViewController.addEvent(transaction.args.sender, transaction.args.receiver);

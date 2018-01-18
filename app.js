@@ -7,23 +7,45 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
 const routes = require('./routes');
+const passport = require('passport');
+const User = require('./models/user');
+const setUpPassport = require('./setuppassport');
+
+
 
 // -- configuring https server (later.)
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
-// mongoose.connect(process.env.MONGODB_URI);
 
+const options = {
+  useMongoClient: true,
+  autoIndex: false, // Don't build indexes
+  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0
+};
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://app:w2dwV3xNEevUXFg+Atf,qnchbge+B@ds046377.mlab.com:46377/tapdb', options);
+setUpPassport();
 // -- middleware
+
 app.use(logger('short'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+
 app.use(session({
   secret: 'BF;FGvLTx/vWH+GM9Nd8VsvRebQgY',
   resave: true,
   saveUninitialized: true
 }));
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // -- I think I will have to move this to the routes folder?
 let publicPath = path.resolve(__dirname, 'public');
 app.use(express.static(publicPath));
