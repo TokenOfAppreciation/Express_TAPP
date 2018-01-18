@@ -1,3 +1,38 @@
 body {
-  background-color: #e0b0ff;
+  background-color: #ddb2f9;
+  height: 100%;
+  width: 100%;
+}
+
+/* label color */
+label {
+  color: #746b72 !important;
+}
+/* label focus color */
+input:focus + label {
+  color: #f06292 !important;
+}
+/* label underline focus color */
+input:focus {
+  border-bottom: 1px solid #f06292 !important;
+  box-shadow: 0 1px 0 0 #f06292 !important;
+}
+
+li.pasttransactions {
+  background-color: #d1c4e9 !important;
+}
+
+.btn:hover {
+  background-color: #ddb2f9 !important;
+}
+
+.left_col {
+  background-color: #c6b1cf;
+  height: 100vh !important;
+}
+
+.right_col_cards {
+  /*background: #ffff;*/
+  width: 100vh;
+  padding-left: 10vh;
 }

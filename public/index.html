@@ -5,73 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="./main.css">
   <title>TAPP</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary sticky-top">
-    <a class="navbar-brand" href="#">Token of Appreciation</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <div class="navbar-fixed">
+      <nav>
+       <div class="nav-wrapper pink lighten-2">
+         <a href="#!" class="brand-logo"><i class="material-icons">keyboard_tab</i>Token of Appreciation</a>
+           <ul class="right hide-on-med-and-down">
+             <li><a href="sass.html">Home</a></li>
+             <li><a href="badges.html">Login</a></li>
+           </ul>
+       </div>
+     </nav>
+  </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
-        </li>
+
+  <div class="row">
+    <div class="col s12 m4 l3 left_col z-depth-2">
+      <br>
+
+      <h4>Account Data</h4>
+        <ul class="list-group">
+          <li class="list-group-item">Your current Address: <span id="UserAddress">N/A</span></li>
+          <li class="list-group-item">Validated: <span id="UserValidated">N/A</span></li>
+          <li class="list-group-item">Your TAPs: <span id="UserBalance">N/A</span></li>
+        </ul>
+      <br>
+
+      <h4>Chain Data</h4>
+        <ul class="list-group">
+          <li class="list-group-item">Current Block: <span id="CurrentBlock">N/A</span></li>
+          <li class="list-group-item">Time Since last Block: <span id="TimeSinceLastBlock">N/A</span></li>
+          <li class="list-group-item">Network: <span id="Network">N/A</span></li>
+        </ul>
+    </div>
+
+    <div class="col s12 m8 l9 center-align">
+      <br>
+      <div class="card-panel deep-purple lighten-4 center-align z-depth-3">
+        <div class="card-content">
+              <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsam odio natus iusto
+                  nostrum in voluptatibus tempore. Ullam accusantium, molestiae? Vero quod explicabo saepe
+                  inventore illum est fugit aperiam qui?
+              </p>
+              <div class="input-field">
+                <input type="text" class="center-align" name="SendToAddress" id="ReceiverAddress">
+                <label for="SendToAddress">Send to Ethereum Address:</label>
+              </div>
+        </div>
+
+        <br>
+
+        <div class="card-action center-align">
+          <button class="btn waves-effect waves-light pink lighten-2" type="submit" name="action" id="SendTAP">Send TAP
+           <i class="material-icons right">keyboard_tab</i>
+          </button>
+        </div>
+        <br>
+   </div>
+  <br>
+
+
+  <div class="card-panel deep-purple lighten-4 z-depth-3">
+    <h4>Past Transactions</h4>
+      <ul class="collection" id="EventWatcher">
+
+
+
       </ul>
-    </div>
-  </nav>
-
-
-  <div class="container center-align">
-
-    <br>
-
-  <form action=""></form>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsam odio natus iusto
-      nostrum in voluptatibus tempore. Ullam accusantium, molestiae? Vero quod explicabo saepe
-      inventore illum est fugit aperiam qui?
-    </p>
-    <h3>Account Data</h3>
-    <ul class="list-group">
-      <li class="list-group-item">Your current Address: <span id="UserAddress">N/A</span></li>
-      <li class="list-group-item">Validated: <span id="UserValidated">N/A</span></li>
-      <li class="list-group-item">Your TAPs: <span id="UserBalance">N/A</span></li>
-    </ul>
-    <br>
-    <form>
-    <div class="form-group">
-      <label for="SendToAddress">Send to:</label>
-      <input type="text" class="form-control" name="SendToAddress" value="" placeholder="Enter Ethereum Address here..." id="ReceiverAddress">
-    </div>
-    <button class="btn btn-primary btn-block" type="Submit" id="SendTAP">Send</button>
-  </form>
-
-  <br>
-  <h3>Chain Data</h3>
-  <ul class="list-group">
-    <li class="list-group-item">Current Block: <span id="CurrentBlock">N/A</span></li>
-    <li class="list-group-item">Time Since last Block: <span id="TimeSinceLastBlock">N/A</span></li>
-    <li class="list-group-item">Network: <span id="Network">N/A</span></li>
-  </ul>
-
-  <br>
-  <!-- <button class="btn btn-primary btn-block" type="" id="debug">Debug Load</button> -->
-
-
-  <h3>Past Transactions</h3>
-  <ul class="list-group" id="EventWatcher">
-
-
-
-  </ul>
-
+  </div>
+</div>
 
 
 

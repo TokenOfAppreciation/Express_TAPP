@@ -132,8 +132,8 @@ const ViewController = {
   , addEvent : (sender, receiver) => {
     dnEventWatcher = document.getElementById('EventWatcher');
     dnNewEntry = document.createElement('li');
-    dnNewEntry.innerHTML = sender + "=>" + receiver;
-    dnNewEntry.classList.add('list-group-item');
+    dnNewEntry.innerHTML = sender + "  =>  " + receiver;
+    dnNewEntry.classList.add('collection-item', 'pasttransactions');
     dnEventWatcher.appendChild(dnNewEntry);
   }
   , initTimer : () => {
