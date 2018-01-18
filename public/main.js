@@ -4,7 +4,113 @@ let TAPaddress = "0x6e4f912249890FF662582D2b08C0891586aee742";
 let TAP;
 let tap;
 
-const Controller = {
+ContractHandler = {
+  init : function (){
+    ContractHandler.initWeb3();
+    ContractHandler.initContract();
+    ContractHandler.initDefaultAccount();
+    ContractHandler.initSendTapListener();
+    ContractHandler.initTapEventListener();
+    ContractHandler.updateAll();
+  }
+  , initContract : function (){
+    // Initialize Contract
+    TAP = web3.eth.contract(TAPabi);
+    tap = TAP.at(TAPaddress);
+  }
+  , initWeb3 : function () {
+    // Initialize connection to existing Web3 provider
+    if ((typeof web3 !== 'undefined') && (web3.version.network === '4')) {
+      console.log("Using external provider on Rinkeby.");
+      // web3.currentProvider = new Web3.providers.HttpProvider('http://rinkeby.infura.io/3YTOIgEH760BLrrJK0tm');
+      window.web3 = new Web3(web3.currentProvider);
+    } else {
+      console.warn("TAP is only accessible via the Rinkeby-Testnet");
+    }
+  }
+  , initDefaultAccount : function () {
+    // Set default Account
+    let defaultAccount = web3.eth.defaultAccount;
+    if (!defaultAccount){
+      web3.eth.defaultAccount = web3.eth.accounts[0];
+    }
+  }
+  , checkValidation : function () {
+    tap.isValidated(web3.eth.accounts[0], (error, result)=>{
+      if (!error){
+        if(result){
+          ViewController.setValidated("True");
+        } else {
+          ViewController.setValidated("False");
+        }
+      } else {
+        ViewController.setValidated("There was an error retrieving your status.");
+      }
+    });
+  }
+  , checkBalance : function () {
+    tap.balanceOf(web3.eth.accounts[0], (error, result)=>{
+      if(!error){
+        ViewController.setBalance(result);
+      } else {
+        console.log(error);
+      }
+    });
+  }
+  , initTapEventListener : function () {
+    // ----- tapped
+    let tapEvent = tap.Tapped({},{fromBlock: 0, toBlock: 'latest'});
+    tapEvent.get(function(err,res){
+      if (!err){
+        res.forEach((transaction)=>{
+          if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
+          ViewController.addEvent(transaction.args.sender, transaction.args.receiver);
+          }
+        });
+      } else {
+        console.log(err);
+      }
+    });
+    tapEvent.watch(function(err,res){
+      if (!err){
+          res.forEach((transaction)=>{
+            if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
+              ViewController.addEvent(transaction.args.sender, transaction.args.receiver);
+            }
+          });
+      } else {
+        console.log(err);
+      }
+    });
+  }
+  , initSendTapListener : function (){
+    //----Send TAP Button
+    document.getElementById("SendTAP").addEventListener("click", function(){
+      if(web3.isAddress(document.getElementById("ReceiverAddress").value)) {
+        let receiverAddress = document.getElementById("ReceiverAddress").value;
+        //let senderAddress = web3.eth.defaultAccount;
+        tap.tap(receiverAddress, {gas: 200000}, (error, result) =>{
+          if (!error){
+            let txHash = result;
+            console.log(txHash);
+          } else {
+            console.log('Ooops, something went wrong')
+          }
+        });
+      } else {
+        console.log("Please enter a valid Ethereum Address")
+      }
+    });
+  }
+  , updateAll : function () {
+    ContractHandler.checkValidation();
+    ContractHandler.checkBalance();
+  }
+}
+
+//-------------------------------------------------
+
+const ViewController = {
   setCurrentAccount : (account) => {
     document.getElementById('UserAddress').innerHTML = account;
   }
@@ -32,27 +138,28 @@ const Controller = {
   }
   , initTimer : () => {
     let seconds = 0;
-    if (Controller.timer){
-      clearInterval(Controller.timer);
+    if (ViewController.timer){
+      clearInterval(ViewController.timer);
     }
-    Controller.timer = setInterval(()=>{
+    ViewController.timer = setInterval(()=>{
       seconds += 1;
-      Controller.setTimeSinceLastBlock(seconds);
+      ViewController.setTimeSinceLastBlock(seconds);
     },1000);
   }
   , init : () => {
     // -- init -------
-    Controller.setCurrentAccount(web3.eth.accounts[0]);
-    web3.eth.getBlockNumber(Controller.setBlockNumber);
-    Controller.setNetwork(web3.version.network);
-    Controller.initTimer();
+    ViewController.setCurrentAccount(web3.eth.accounts[0]);
+    web3.eth.getBlockNumber(ViewController.setBlockNumber);
+    ViewController.setNetwork(web3.version.network);
+    ViewController.initTimer();
 
     //-- update on block ------
     let filter = web3.eth.filter('latest');
     let subscription = filter.watch(function(err,res){
       if (!err){
-        Controller.initTimer();
-        web3.eth.getBlockNumber(Controller.setBlockNumber);
+        ViewController.initTimer();
+        web3.eth.getBlockNumber(ViewController.setBlockNumber);
+        ContractHandler.updateAll();
       } else {
         console.log(err);
       }
@@ -64,115 +171,15 @@ const Controller = {
 
 //---------------------------------------------------------------------
 
-
-
 window.addEventListener('load', function() {
-  // Initialize connection to existing Web3 provider
-  if ((typeof web3 !== 'undefined') && (web3.version.network === '4')) {
-    console.log("Using external provider on Rinkeby.");
-    // web3.currentProvider = new Web3.providers.HttpProvider('http://rinkeby.infura.io/3YTOIgEH760BLrrJK0tm');
-    window.web3 = new Web3(web3.currentProvider);
-  } else {
-    console.warn("TAP is only accessible via the Rinkeby-Testnet");
-  }
 
-  // Initialize Contract
-  TAP = web3.eth.contract(TAPabi);
-  tap = TAP.at(TAPaddress);
+  ViewController.init();
+  ContractHandler.init();
 
-  let defaultAccount = web3.eth.defaultAccount;
-  if (!defaultAccount){
-    web3.eth.defaultAccount = web3.eth.accounts[0];
-  }
-
-  tap.isValidated(web3.eth.accounts[0], (error, result)=>{
-    if (!error){
-      if(result){
-        Controller.setValidated("True");
-      } else {
-        Controller.setValidated("False");
-      }
-    } else {
-      Controller.setValidated("There was an error retrieving your status.");
-    }
-  });
-
-  tap.balanceOf(web3.eth.accounts[0], (error, result)=>{
-    if(!error){
-      Controller.setBalance(result);
-    } else {
-      console.log(error);
-    }
-  });
-
-  // ----- tapped
-  let tapEvent = tap.Tapped({},{fromBlock: 0, toBlock: 'latest'});
-  tapEvent.get(function(err,res){
-    if (!err){
-      res.forEach((transaction)=>{
-        if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
-        Controller.addEvent(transaction.args.sender, transaction.args.receiver);
-        }
-      });
-    } else {
-      console.log(err);
-    }
-  });
-
-  tapEvent.watch(function(err,res){
-    if (!err){
-        res.forEach((transaction)=>{
-          if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
-            Controller.addEvent(transaction.args.sender, transaction.args.receiver);
-          }
-        });
-    } else {
-      console.log(err);
-    }
-  });
-
-
-
-  // TAP.isValidated().call('0x09F96270d12172633501D446F0f61B2E6d61d2d0', (err, res)=>{
-  //   if (!err){
-  //     console.log('Hi');
-  //   } else {
-  //     console.log('Not hi.');
-  //   }
-  // });
-  // let validatedData = tap.tap.getData('0xb69c96892c39f647908bf6abf803099e93f85839');
-  // console.log(validatedData);
-  // let txObject = {
-  //   "from" : "0x09F96270d12172633501D446F0f61B2E6d61d2d0"
-  //   , "data" : validatedData
-  // }
-  // web3.eth.call(txObject, console.log);
-
-  // 0x09F96270d12172633501D446F0f61B2E6d61d2d0
-  // Initialize GUI
-  Controller.init();
-});
-
-//----Send TAP Button
-document.getElementById("SendTAP").addEventListener("click", function(){
-  if(web3.isAddress(document.getElementById("ReceiverAddress").value)) {
-    let receiverAddress = document.getElementById("ReceiverAddress").value;
-    //let senderAddress = web3.eth.defaultAccount;
-    tap.tap(receiverAddress, {gas: 200000}, (error, result) =>{
-      if (!error){
-        let txHash = result;
-        console.log(txHash);
-      } else {
-        console.log('Ooops, something went wrong')
-      }
-    });
-  } else {
-    console.log("Please enter a valid Ethereum Address")
-  }
 });
 
 
 //---- Debug button
-document.getElementById('debug').addEventListener('click', function(){
-
-});
+// document.getElementById('debug').addEventListener('click', function(){
+//
+// });
