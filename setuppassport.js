@@ -27,7 +27,7 @@ module.exports = function (){
     console.log(profile.id);
     console.log(profile.displayName);
     console.log(profile.emails);
-    UserConnection.findOrCreate({email: profile.emails[0].value},
+    User.findOrCreate({email: profile.emails[0].value},
       function(err, user) {
         if (err) {
           console.log('Im in the booboo-zone');
@@ -46,7 +46,7 @@ module.exports = function (){
   });
 
   passport.deserializeUser(function(id, done) {
-      user.findById(id, function(err, user) {
+      User.findById(id, function(err, user) {
         console.log('Deserialized');
           done(err, user);
       });

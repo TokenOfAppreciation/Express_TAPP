@@ -18,17 +18,17 @@ const setUpPassport = require('./setuppassport');
 const app = express();
 app.set('port', process.env.PORT || 3000);
 
-const options = {
-  useMongoClient: true,
-  autoIndex: false, // Don't build indexes
-  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-  reconnectInterval: 500, // Reconnect every 500ms
-  poolSize: 10, // Maintain up to 10 socket connections
-  // If not connected, return errors immediately rather than waiting for reconnect
-  bufferMaxEntries: 0
-};
+// const options = {
+//   useMongoClient: true,
+//   autoIndex: false, // Don't build indexes
+//   reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+//   reconnectInterval: 500, // Reconnect every 500ms
+//   poolSize: 10, // Maintain up to 10 socket connections
+//   // If not connected, return errors immediately rather than waiting for reconnect
+//   bufferMaxEntries: 0
+// };
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://app:w2dwV3xNEevUXFg+Atf,qnchbge+B@ds046377.mlab.com:46377/tapdb', options);
+mongoose.connect('mongodb://app:EXJr0lstuyvHhDU7@cluster0-shard-00-00-9i8yq.mongodb.net:27017,cluster0-shard-00-01-9i8yq.mongodb.net:27017,cluster0-shard-00-02-9i8yq.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 setUpPassport();
 // -- middleware
 
