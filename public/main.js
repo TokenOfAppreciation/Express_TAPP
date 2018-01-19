@@ -115,6 +115,9 @@ const ViewController = {
   setCurrentAccount : (account) => {
     document.getElementById('UserAddress').innerHTML = account;
   }
+  ,setCurrentAccountForm : (account) => {
+    document.getElementById('UserAddressForm').value = account;
+  }
   , setBlockNumber : (bs, blocknumber) => {
     document.getElementById('CurrentBlock').innerHTML = blocknumber;
   }
@@ -137,6 +140,13 @@ const ViewController = {
     dnNewEntry.classList.add('list-group-item');
     dnEventWatcher.appendChild(dnNewEntry);
   }
+  , initRefreshButtonListener : () => {
+    document.getElementById('refresh-address').addEventListener("click", function(){
+      console.log('refreshed');
+      ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
+    })
+    console.log(document.getElementById('refresh-address'));
+  }
   , initTimer : () => {
     let seconds = 0;
     if (ViewController.timer){
@@ -149,6 +159,8 @@ const ViewController = {
   }
   , init : () => {
     // -- init -------
+    ViewController.initRefreshButtonListener();
+    ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
     ViewController.setCurrentAccount(web3.eth.accounts[0]);
     web3.eth.getBlockNumber(ViewController.setBlockNumber);
     ViewController.setNetwork(web3.version.network);
@@ -167,7 +179,18 @@ const ViewController = {
     });
   }
   , timer : null
-  ,
+  // , fillAddressChooser : () =>{
+  //   let dnAddressChooser = document.getElementById('MetaMaskAddressChooser');
+  //   let lsAccounts = web.eth.accounts;
+  //   console.log(lsAccounts);
+  //   web.eth.accounts.forEach((account)=>{
+  //     let dnNewEntry = document.createElementByTagName('option');
+  //     console.log(account);
+  //     dnNewEntry.innerHTML = account;
+  //     console.log(dnNewEntry);
+  //     dnAddressChooser.appendChild(dnNewEntry);
+  //   });
+  // }
 };
 
 //---------------------------------------------------------------------
