@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="./main.css">
   <title>TAPP</title>
 </head>
@@ -47,7 +47,7 @@
     <div class="col s12 m8 l9 center-align right_col_cards">
       <br>
       <div class="card-panel deep-purple lighten-4 center-align z-depth-1">
-        <div class="card-content">
+          <div class="card-content">
               <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsam odio natus iusto
                   nostrum in voluptatibus tempore. Ullam accusantium, molestiae? Vero quod explicabo saepe
@@ -57,36 +57,76 @@
                 <input type="text" class="center-align" name="SendToAddress" id="ReceiverAddress">
                 <label for="SendToAddress">Send to Ethereum Address:</label>
               </div>
-        </div>
+          </div>
 
-        <br>
+          <br>
 
-        <div class="card-action center-align">
-          <button class="btn waves-effect waves-light pink lighten-2" type="submit" name="action" id="SendTAP">Send TAP
-           <i class="material-icons right">keyboard_tab</i>
-          </button>
-        </div>
-        <br>
-   </div>
-  <br>
-
-
-  <div class="card-panel deep-purple lighten-4 z-depth-1">
-    <h4>Past Transactions</h4>
-      <ul class="collection" id="EventWatcher">
+          <div class="card-action center-align">
+            <button class="btn waves-effect waves-light pink lighten-2" type="submit" name="action" id="SendTAP">Send TAP
+             <i class="material-icons right">keyboard_tab</i>
+            </button>
+          </div>
+          <br>
+      </div>
+      <br>
 
 
+      <div class="card-panel deep-purple lighten-4 z-depth-1">
+        <h4>Past Transactions</h4>
+          <ul class="collection" id="EventWatcher">
 
-      </ul>
-  </div>
-</div>
+
+
+          </ul>
+      </div>
+    </div>
+
+    <div id="modalNoRinkeby" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h4>No Rinkeby?!</h4>
+        <p>TAP is only available on the Rinkeby-Testnet. Please use a suitable Web3-Provider. </p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Understood</a>
+      </div>
+    </div>
+
+    <div id="modalNotAnAddress" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h4>Is that really an address?!</h4>
+        <p>It looks like the provided input isn't a valid ethereum address. Please enter a valid ethereum address. </p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Understood</a>
+      </div>
+    </div>
+
+    <div id="modalSendError" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h4>SO SORRY!</h4>
+        <p>It looks like something went wrong with your transaction, please try again in a moment.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Understood</a>
+      </div>
+    </div>
+
+    <div id="modalSendSuccess" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h4>Your TAP is on it's way!</h4>
+        <p id="SendSuccessText"></p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Perfect!</a>
+      </div>
+    </div>
 
 
 
   </div>
   <script src="web3.min.js"></script>
   <script src="main.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </body>
 </html>

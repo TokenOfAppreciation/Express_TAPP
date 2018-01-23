@@ -26,11 +26,13 @@ li.pasttransactions {
   background-color: #f2749f !important;
 }
 
+.btn-flat:hover {
+  background-color: #f2749f !important;
+}
+
 .left_col {
   background-color: #d1c4e9;
   min-height: 100vh !important;
-  padding-bottom: 0vh !important;
-  position: sticky !important;
 }
 
 .right_col_cards {

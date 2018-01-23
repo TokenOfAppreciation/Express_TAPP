@@ -4,6 +4,7 @@ let TAPaddress = "0x6e4f912249890FF662582D2b08C0891586aee742";
 let TAP;
 let tap;
 
+
 ContractHandler = {
   init : function (){
     ContractHandler.initWeb3();
@@ -26,6 +27,8 @@ ContractHandler = {
       window.web3 = new Web3(web3.currentProvider);
     } else {
       console.warn("TAP is only accessible via the Rinkeby-Testnet");
+      let modalNoRinkeybyWarning = document.getElementById('modalNoRinkeby');
+      $(modalNoRinkeybyWarning).modal().modal('open');
     }
   }
   , initDefaultAccount : function () {
@@ -44,7 +47,7 @@ ContractHandler = {
           ViewController.setValidated("False");
         }
       } else {
-        ViewController.setValidated("There was an error retrieving your status.");
+        ViewController.setValidated("Couldn't retrieve your status.");
       }
     });
   }
@@ -93,12 +96,19 @@ ContractHandler = {
           if (!error){
             let txHash = result;
             console.log(txHash);
+            let checkResultLink = "https://rinkeby.etherscan.io/tx/" + txHash;
+            console.log(checkResultLink);
+            let modalSendSuccessMessage = document.getElementById('modalSendSuccess');
+            document.getElementById('SendSuccessText').innerHTML = "Want to check for yourself? Go to " + "<a href="+ checkResultLink+">"+checkResultLink+"</a>" + " to see the status of your TAP";
+            $(modalSendSuccessMessage).modal().modal('open');
           } else {
-            console.log('Ooops, something went wrong')
+            let modalSendErrorWarning = document.getElementById('modalSendError');
+            $(modalSendErrorWarning).modal().modal('open');
           }
         });
       } else {
-        console.log("Please enter a valid Ethereum Address")
+        let modalNotAnAddressWarning = document.getElementById('modalNotAnAddress');
+        $(modalNotAnAddressWarning).modal().modal('open');
       }
     });
   }
