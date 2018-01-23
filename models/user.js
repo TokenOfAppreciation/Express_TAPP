@@ -5,6 +5,8 @@ const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = mongoose.Schema({
   email: {type: String, required: true},
+  assigned: {type: Boolean},
+  address: {type: String}
   // username: {type: String, required: true},
   // facebookID: {type: String, required: true},
   // facebookThirdPartyID: {type: String, required: true, default: "N/A"},
