@@ -26,6 +26,7 @@ router.get('/auth/facebook/callback',
 
 router.post('/assign', function(req, res, next){
   console.log(req.body.address);
+  res.redirect('/assign.html');
 })
 
 module.exports = router;
