@@ -5,13 +5,17 @@ let TAP;
 let tap;
 
 ContractHandler = {
-  init : function (){
+  initIndex : function (){
     ContractHandler.initWeb3();
     ContractHandler.initContract();
     ContractHandler.initDefaultAccount();
     ContractHandler.initSendTapListener();
     ContractHandler.initTapEventListener();
     ContractHandler.updateAll();
+  }
+  , initAssign : () => {
+    ContractHandler.initWeb3();
+    ContractHandler.initDefaultAccount();
   }
   , initContract : function (){
     // Initialize Contract
@@ -157,10 +161,8 @@ const ViewController = {
       ViewController.setTimeSinceLastBlock(seconds);
     },1000);
   }
-  , init : () => {
+  , initIndex : () => {
     // -- init -------
-    ViewController.initRefreshButtonListener();
-    ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
     ViewController.setCurrentAccount(web3.eth.accounts[0]);
     web3.eth.getBlockNumber(ViewController.setBlockNumber);
     ViewController.setNetwork(web3.version.network);
@@ -177,6 +179,10 @@ const ViewController = {
         console.log(err);
       }
     });
+  }
+  , initAssign : () => {
+    ViewController.initRefreshButtonListener();
+    ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
   }
   , timer : null
   // , fillAddressChooser : () =>{
@@ -196,11 +202,23 @@ const ViewController = {
 //---------------------------------------------------------------------
 
 window.addEventListener('load', function() {
+  // get body tag
+  dnBody = document.getElementsByTagName('body');
 
-  ViewController.init();
-  ContractHandler.init();
+  if (dnBody[0].className === 'index'){
+    console.log("I'm on the index page.");
+    ViewController.initIndex();
+    ContractHandler.initIndex();
+  } else if (dnBody[0].className === 'assign') {
+    console.log("I'm on the assignment page.");
+    ViewController.initAssign();
+    ContractHandler.initAssign();
+  }
+
 
 });
+
+
 
 
 //---- Debug button
