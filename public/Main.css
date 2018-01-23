@@ -1,5 +1,5 @@
 body {
-  background-color: #ddb2f9;
+  background-color: #ffffff;
   height: 100%;
   width: 100%;
 }
@@ -23,16 +23,54 @@ li.pasttransactions {
 }
 
 .btn:hover {
-  background-color: #ddb2f9 !important;
+  background-color: #f2749f !important;
 }
 
 .left_col {
-  background-color: #c6b1cf;
-  height: 100vh !important;
+  background-color: #d1c4e9;
+  min-height: 100vh !important;
+  padding-bottom: 0vh !important;
+  position: sticky !important;
 }
 
 .right_col_cards {
-  /*background: #ffff;*/
-  width: 100vh;
-  padding-left: 10vh;
+  padding-left: 10vh !important;
+  padding-right: 10vh !important;
+}
+
+.collection {
+  border: 0px !important;
+  border-radius: 0px !important;
+  background-color: #d1c4e9 !important;
+}
+
+.collection-item {
+  background-color: #d1c4e9 !important;
+  border-bottom: 0px !important;
+}
+
+.c_item_left_col {
+  padding-left: 20px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.collection-header {
+  background-color: #d1c4e9 !important;
+  border-bottom: 0px !important;
+}
+
+.icons_left_col {
+  float: right !important;
+}
+
+.content_left_col {
+  float: right !important;
+}
+
+.address_trunc {
+  max-width: 60% !important;
+  white-space: nowrap !important;
+  display: inline-block !important;
+  overflow: scroll !important;
 }

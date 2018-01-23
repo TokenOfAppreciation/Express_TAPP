@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="navbar-fixed">
-      <nav>
+      <nav class="z-depth-0">
        <div class="nav-wrapper pink lighten-2">
          <a href="#!" class="brand-logo"><i class="material-icons">keyboard_tab</i>Token of Appreciation</a>
            <ul class="right hide-on-med-and-down">
@@ -24,28 +24,29 @@
 
 
   <div class="row">
-    <div class="col s12 m4 l3 left_col z-depth-2">
+    <div class="col s12 m4 l3 left_col z-depth-1">
       <br>
 
-      <h4>Account Data</h4>
-        <ul class="list-group">
-          <li class="list-group-item">Your current Address: <span id="UserAddress">N/A</span></li>
-          <li class="list-group-item">Validated: <span id="UserValidated">N/A</span></li>
-          <li class="list-group-item">Your TAPs: <span id="UserBalance">N/A</span></li>
+        <ul class="collection with-header">
+          <li class="collection-header"><div><h5>Account Data<i class="material-icons icons_left_col">person</i></h5></div></li>
+          <li class="collection-item c_item_left_col">Address: <span id="UserAddress" class="address_trunc content_left_col">N/A</span></li>
+          <li class="collection-item c_item_left_col">Validated: <span id="UserValidated" class="content_left_col">N/A</span></li>
+          <li class="collection-item c_item_left_col">Your TAPs: <span id="UserBalance" class="content_left_col">N/A</span></li>
         </ul>
+
       <br>
 
-      <h4>Chain Data</h4>
-        <ul class="list-group">
-          <li class="list-group-item">Current Block: <span id="CurrentBlock">N/A</span></li>
-          <li class="list-group-item">Time Since last Block: <span id="TimeSinceLastBlock">N/A</span></li>
-          <li class="list-group-item">Network: <span id="Network">N/A</span></li>
+        <ul class="collection with-header">
+          <li class="collection-header"><div><h5>Chain Data<i class="material-icons icons_left_col">cloud_done</i></h5></div></li>
+          <li class="collection-item c_item_left_col">Current Block: <span id="CurrentBlock" class="content_left_col">N/A</span></li>
+          <li class="collection-item c_item_left_col">Time Since last Block: <span id="TimeSinceLastBlock" class="content_left_col">N/A</span></li>
+          <li class="collection-item c_item_left_col">Network: <span id="Network" class="content_left_col">N/A</span></li>
         </ul>
     </div>
 
-    <div class="col s12 m8 l9 center-align">
+    <div class="col s12 m8 l9 center-align right_col_cards">
       <br>
-      <div class="card-panel deep-purple lighten-4 center-align z-depth-3">
+      <div class="card-panel deep-purple lighten-4 center-align z-depth-1">
         <div class="card-content">
               <p>
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim ipsam odio natus iusto
@@ -70,7 +71,7 @@
   <br>
 
 
-  <div class="card-panel deep-purple lighten-4 z-depth-3">
+  <div class="card-panel deep-purple lighten-4 z-depth-1">
     <h4>Past Transactions</h4>
       <ul class="collection" id="EventWatcher">
 
