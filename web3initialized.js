@@ -7,6 +7,7 @@ const contractAdminAccount = web3.eth.accounts.privateKeyToAccount('0x5f2b171db1
 web3.eth.accounts.wallet.add(contractAdminAccount);
 web3.eth.defaultAccount = contractAdminAccount.address;
 
-console.log(web3.eth.accounts);
+//console.log(web3.eth.accounts);
+console.log(web3);
 
 module.exports = web3;

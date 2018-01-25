@@ -4,6 +4,8 @@ const router = express.Router();
 const passport = require('passport');
 const web3 = require('./web3initialized');
 const tapContract = require('./tap.js');
+const EthereumTx = require('ethereumjs-tx')
+
 
 router.use(function(req, res, next){
   res.locals.currentUser = req.user;
@@ -29,36 +31,40 @@ router.get('/auth/facebook/callback',
 router.post('/assign', function(req, res, next){
   res.redirect('/assign.html');
 
-  // console.log("The default account: " + web3.eth.defaultAccount);
-  // console.log("The wallet: " + web3.eth.accounts.wallet[0]);
-  // console.log(web3.eth.accounts.wallet);
+  function configureTxn(txnCount) {
+   //console.log(util.inspect(args, false, null));
+   let txObject = '0x221e2efc';
+   let txData = web3.utils.sha3(req.body.address, web3.eth.defaultAccount);
+   let txDataPruned = txObject + txData.slice(2);
 
-    tapContract.methods.validate(req.body.address, web3.eth.defaultAccount).send({from: web3.eth.defaultAccount})
-    .on('transactionHash', function(hash){
-      console.log(hash);
-    })
-    .on('receipt', function(receipt){
-        console.log(receipt);
-    })
-    .on('confirmation', function(confirmationNumber, receipt){
-        console.log(confirmationNumber);
-    })
-    .on('error', console.error);
+   console.log(txObject);
+   console.log(txnCount);
+   console.log(web3.utils.toHex(txnCount));
 
-  console.log("Contract address in routes.js: " + tapContract.options.address);
+   // ----- generating a Tx-Object
+   let rawTx = {
+     nonce: web3.utils.toHex(txnCount),
+     gasPrice: web3.utils.toHex(100000000000),
+     gasLimit: web3.utils.toHex(140000),
+     to: tapContract.options.address,
+     value: web3.utils.toHex(0),
+     data: txDataPruned
+   };
 
-  // let txObject = tapContract.methods.validate(req.body.address, web3.eth.defaultAccount);
-  // console.log(txObject);
-  // // tapContract.methods.validate(req.body.address, web3.eth.defaultAccount).getData(); //.send({from: web3.eth.defaultAccount, gas: 200000});
-  // web3.eth.accounts.signTransaction(txObject, '0x5f2b171db16fdaba948ff26e22665b9c93bb51f28154e7dd978bcc7d0c9479c3');
-  //let transactionTx = tapContract.methods.validate(req.body.address, web3.eth.defaultAccount).send();
-  //console.log(transactionTx);
-  // console.log(tapContract.methods.validate.getData(req.body.address, web3.eth.defaultAccount));
-  //
-  // console.log("This is the output: " + web3.eth.accounts.signTransaction({tx: transactionTx, gas: 200000, to: tapContract.options.address}, '0x5f2b171db16fdaba948ff26e22665b9c93bb51f28154e7dd978bcc7d0c9479c3').then((object)=>{
-  //   console.log(object.rawTransaction.toString('hex'));
-  //   web3.eth.sendSignedTransaction(object.rawTransaction.toString('hex')).on('receipt', console.log);
-  // }));
+     const privateKey = Buffer.from('5f2b171db16fdaba948ff26e22665b9c93bb51f28154e7dd978bcc7d0c9479c3', 'hex');
+
+     const txn = new EthereumTx(rawTx);
+     txn.sign(privateKey);
+     const serializedTxn = txn.serialize();
+
+     web3.eth.sendSignedTransaction('0x' + serializedTxn.toString('hex'))
+     .on('receipt', console.log);
+
+ };
+ web3.eth.getTransactionCount(web3.eth.defaultAccount).then(configureTxn);
+
+
+
 
 })
 
