@@ -34,6 +34,7 @@ ContractHandler = {
   }
   , initDefaultAccount : function () {
     // Set default Account
+    console.log(web3.eth.defaultAccount);
     let defaultAccount = web3.eth.defaultAccount;
     if (!defaultAccount){
       web3.eth.defaultAccount = web3.eth.accounts[0];
