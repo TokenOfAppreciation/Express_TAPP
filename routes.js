@@ -32,10 +32,7 @@ router.post('/assign', function(req, res, next){
   res.redirect('/assign.html');
 
   function configureTxn(txnCount) {
-   //console.log(util.inspect(args, false, null));
-//   let txObject = '0x221e2efc';
-//   let txData = web3.eth.abi.encodeParameters(['address', 'address'], [req.body.address, web3.eth.defaultAccount]);
-  // let txDataPruned = txObject + txData;
+   // ------- generating the transaction data from method name and parmas of 'validate'
   let txData = web3.eth.abi.encodeFunctionCall({
     name: 'validate',
     type: 'function',
@@ -46,12 +43,13 @@ router.post('/assign', function(req, res, next){
         type: 'address',
         name: '_recipientAddress'
     }]
-}, [req.body.address, web3.eth.defaultAccount]);
+    }, [req.body.address, web3.eth.defaultAccount]);
 
+    // ------- Leave here for future debugging purposes
    //console.log(txObject);
    //console.log(txnCount);
-   console.log(txData);
-   console.log(web3.utils.toHex(txnCount));
+   //console.log(txData);
+   //console.log(web3.utils.toHex(txnCount));
 
    // ----- generating a Tx-Object
    let rawTx = {
@@ -72,12 +70,9 @@ router.post('/assign', function(req, res, next){
      web3.eth.sendSignedTransaction('0x' + serializedTxn.toString('hex'))
      .on('receipt', console.log);
 
- };
- web3.eth.getTransactionCount(web3.eth.defaultAccount).then(configureTxn);
+   };
+   web3.eth.getTransactionCount(web3.eth.defaultAccount).then(configureTxn);
 
-
-
-
-})
+ })
 
 module.exports = router;
