@@ -6,13 +6,17 @@ let tap;
 
 
 ContractHandler = {
-  init : function (){
+  initIndex : function (){
     ContractHandler.initWeb3();
     ContractHandler.initContract();
     ContractHandler.initDefaultAccount();
     ContractHandler.initSendTapListener();
     ContractHandler.initTapEventListener();
     ContractHandler.updateAll();
+  }
+  , initAssign : () => {
+    ContractHandler.initWeb3();
+    ContractHandler.initDefaultAccount();
   }
   , initContract : function (){
     // Initialize Contract
@@ -33,6 +37,7 @@ ContractHandler = {
   }
   , initDefaultAccount : function () {
     // Set default Account
+    console.log(web3.eth.defaultAccount);
     let defaultAccount = web3.eth.defaultAccount;
     if (!defaultAccount){
       web3.eth.defaultAccount = web3.eth.accounts[0];
@@ -76,6 +81,7 @@ ContractHandler = {
     });
     tapEvent.watch(function(err,res){
       if (!err){
+          console.log(res);
           res.forEach((transaction)=>{
             if ((transaction.args.sender === web3.eth.accounts[0]) || (transaction.args.receiver === web3.eth.accounts[0])){
               ViewController.addEvent(transaction.args.sender, transaction.args.receiver);
@@ -124,6 +130,9 @@ const ViewController = {
   setCurrentAccount : (account) => {
     document.getElementById('UserAddress').innerHTML = account;
   }
+  ,setCurrentAccountForm : (account) => {
+    document.getElementById('UserAddressForm').value = account;
+  }
   , setBlockNumber : (bs, blocknumber) => {
     document.getElementById('CurrentBlock').innerHTML = blocknumber;
   }
@@ -146,6 +155,13 @@ const ViewController = {
     dnNewEntry.classList.add('collection-item', 'pasttransactions');
     dnEventWatcher.appendChild(dnNewEntry);
   }
+  , initRefreshButtonListener : () => {
+    document.getElementById('refresh-address').addEventListener("click", function(){
+      console.log('refreshed');
+      ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
+    })
+    console.log(document.getElementById('refresh-address'));
+  }
   , initTimer : () => {
     let seconds = 0;
     if (ViewController.timer){
@@ -156,7 +172,7 @@ const ViewController = {
       ViewController.setTimeSinceLastBlock(seconds);
     },1000);
   }
-  , init : () => {
+  , initIndex : () => {
     // -- init -------
     ViewController.setCurrentAccount(web3.eth.accounts[0]);
     web3.eth.getBlockNumber(ViewController.setBlockNumber);
@@ -175,18 +191,45 @@ const ViewController = {
       }
     });
   }
+  , initAssign : () => {
+    ViewController.initRefreshButtonListener();
+    ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
+  }
   , timer : null
-  ,
+  // , fillAddressChooser : () =>{
+  //   let dnAddressChooser = document.getElementById('MetaMaskAddressChooser');
+  //   let lsAccounts = web.eth.accounts;
+  //   console.log(lsAccounts);
+  //   web.eth.accounts.forEach((account)=>{
+  //     let dnNewEntry = document.createElementByTagName('option');
+  //     console.log(account);
+  //     dnNewEntry.innerHTML = account;
+  //     console.log(dnNewEntry);
+  //     dnAddressChooser.appendChild(dnNewEntry);
+  //   });
+  // }
 };
 
 //---------------------------------------------------------------------
 
 window.addEventListener('load', function() {
+  // get body tag
+  dnBody = document.getElementsByTagName('body');
 
-  ViewController.init();
-  ContractHandler.init();
+  if (dnBody[0].className === 'index'){
+    console.log("I'm on the index page.");
+    ViewController.initIndex();
+    ContractHandler.initIndex();
+  } else if (dnBody[0].className === 'assign') {
+    console.log("I'm on the assignment page.");
+    ViewController.initAssign();
+    ContractHandler.initAssign();
+  }
+
 
 });
+
+
 
 
 //---- Debug button
