@@ -33,12 +33,24 @@ router.post('/assign', function(req, res, next){
 
   function configureTxn(txnCount) {
    //console.log(util.inspect(args, false, null));
-   let txObject = '0x221e2efc';
-   let txData = web3.utils.sha3(req.body.address, web3.eth.defaultAccount);
-   let txDataPruned = txObject + txData.slice(2);
+//   let txObject = '0x221e2efc';
+//   let txData = web3.eth.abi.encodeParameters(['address', 'address'], [req.body.address, web3.eth.defaultAccount]);
+  // let txDataPruned = txObject + txData;
+  let txData = web3.eth.abi.encodeFunctionCall({
+    name: 'validate',
+    type: 'function',
+    inputs: [{
+        type: 'address',
+        name: '_fromAddress'
+    },{
+        type: 'address',
+        name: '_recipientAddress'
+    }]
+}, [req.body.address, web3.eth.defaultAccount]);
 
-   console.log(txObject);
-   console.log(txnCount);
+   //console.log(txObject);
+   //console.log(txnCount);
+   console.log(txData);
    console.log(web3.utils.toHex(txnCount));
 
    // ----- generating a Tx-Object
@@ -48,7 +60,7 @@ router.post('/assign', function(req, res, next){
      gasLimit: web3.utils.toHex(140000),
      to: tapContract.options.address,
      value: web3.utils.toHex(0),
-     data: txDataPruned
+     data: txData
    };
 
      const privateKey = Buffer.from('5f2b171db16fdaba948ff26e22665b9c93bb51f28154e7dd978bcc7d0c9479c3', 'hex');
