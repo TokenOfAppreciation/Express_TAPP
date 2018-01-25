@@ -95,9 +95,9 @@ ContractHandler = {
         tap.tap(receiverAddress, {gas: 200000}, (error, result) =>{
           if (!error){
             let txHash = result;
-            console.log(txHash);
+            //console.log(txHash);
             let checkResultLink = "https://rinkeby.etherscan.io/tx/" + txHash;
-            console.log(checkResultLink);
+            //console.log(checkResultLink);
             let modalSendSuccessMessage = document.getElementById('modalSendSuccess');
             document.getElementById('SendSuccessText').innerHTML = "Want to check for yourself? Go to " + "<a href="+ checkResultLink+">"+checkResultLink+"</a>" + " to see the status of your TAP";
             $(modalSendSuccessMessage).modal().modal('open');
