@@ -32,12 +32,12 @@ const tapInteraction = {
       return txn;
     }
   , signTxn : function (txn) {
-    const privateKey = Buffer.from('5f2b171db16fdaba948ff26e22665b9c93bb51f28154e7dd978bcc7d0c9479c3', 'hex');
+    let privateKey = Buffer.from('5f2b171db16fdaba948ff26e22665b9c93bb51f28154e7dd978bcc7d0c9479c3', 'hex');
     txn.sign(privateKey);
     return txn;
   }
   , serializeTxn : function (signedTxn) {
-    const serializedTxn = signedTxn.serialize();
+    let serializedTxn = signedTxn.serialize();
     return serializedTxn;
   }
   , sendTxn : function (serializedTxn) {
