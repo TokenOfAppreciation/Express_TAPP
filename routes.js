@@ -3,13 +3,22 @@ const User = require('./models/user');
 const router = express.Router();
 const passport = require('passport');
 const tapInteraction = require('./tapInteraction');
+const ejs = require('ejs')
 
+// router.set("view-engine", "ejs");
+// router.set("views", path.resolve(__dirname, "views"));
+// router.engine("html", ejs.renderFile);
 
 router.use(function(req, res, next){
   res.locals.currentUser = req.user;
   res.locals.errors = req.flash('error');
   res.locals.infos = req.flash('info');
   next();
+});
+
+router.get('/transfer', function(req, res, next){
+  console.log('Page rendered through EJS');
+  res.render('transfer');
 });
 
 router.get('/auth/facebook',
