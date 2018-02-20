@@ -1,0 +1,95 @@
+<% include header %>
+
+<div class="row">
+  <!-- Import sidebar here! -->
+  <% include sidebar %>
+
+  <div class="col s12 m8 l9 center-align right_col_cards">
+    <br>
+    <div class="card-panel deep-purple lighten-4 center-align z-depth-1">
+        <div class="card-content">
+            <p>
+                Just send a TAP to a friend to say thank you, or to show your gratitude!
+            </p>
+            <div class="input-field">
+              <input type="text" class="center-align waves-effect" name="SendToAddress" id="ReceiverAddress">
+              <label for="SendToAddress">Send to Ethereum Address:</label>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="card-action center-align">
+          <button class="btn waves-effect waves-light pink lighten-2" type="submit" name="action" id="SendTAP">Send TAP
+           <i class="material-icons right">keyboard_tab</i>
+          </button>
+        </div>
+        <br>
+    </div>
+    <br>
+
+
+    <div class="card-panel deep-purple lighten-4 z-depth-1">
+      <h4>Past Transactions</h4>
+        <ul class="collection" id="EventWatcher"> </ul>
+    </div>
+  </div>
+
+  <div id="modalNoRinkeby" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>No Rinkeby?!</h4>
+      <p>TAP is only available on the Rinkeby-Testnet. Please use a suitable Web3-Provider. </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Understood</a>
+    </div>
+  </div>
+
+  <div id="modalNotAnAddress" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Is that really an address?!</h4>
+      <p>It looks like the provided input isn't a valid ethereum address. Please enter a valid ethereum address. </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Understood</a>
+    </div>
+  </div>
+
+  <div id="modalSendError" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>SO SORRY!</h4>
+      <p>It looks like something went wrong with your transaction, please try again in a moment.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Understood</a>
+    </div>
+  </div>
+
+  <div id="modalSendSuccess" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Your TAP is on it's way!</h4>
+      <p id="SendSuccessText"></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text">Perfect!</a>
+    </div>
+  </div>
+
+  <div id="modalLoginAssignment" class="modal modal-fixed-footer">
+    <form action="/assign" method="post">
+    <div class="modal-content">
+      <h4>Hi! Thanks for signing into TAP with your Facebook Account.</h4>
+      <p> To complete your registration, you will have to assign one of your MetaMask accounts to this Facebook Profile.
+      This is to ensure that everybody only has one account to use with this system. Once you associated the account with the address, you can technically use the contract code with any interface you'd like - it's just that we are the only one around. =) </p>
+      <div class="input-field">
+        <input type="text" class="center-align waves-effect" name="address" id="UserAddressForm">
+        <label for="address">Register this address:</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-light pink lighten-2 btn-flat white-text" type="submit" id="choose-address">Hook me up!</a>
+    </div>
+  </form>
+  </div>
+
+<% include footer %>

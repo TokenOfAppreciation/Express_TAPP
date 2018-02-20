@@ -1,0 +1,23 @@
+<% include header %>
+
+<div class="container">
+
+  <br>
+
+<form action=""></form>
+  <p>
+    Hi! Thanks for signing into TAP with your Facebook Account.
+    To complete your registration, you will have to assign one of your MetaMask accounts to this Facebook Profile.
+    This is to ensure that everybody only has one account to use with this system. Once you associated the account with the address, you can technically use the contract code with any interface you'd like - it's just that we are the only one around. =)
+  </p>
+  <h3>Which Etherem Address would you like to associate with your Account?</h3>
+  <form action="/assign" method="post">
+  <ul class="list-group">
+    <input class="list-group-item" id="UserAddressForm" type="text" name = "address" value="Choose account and refresh..."></input><button type="button" class="btn btn-outline-primary" id="refresh-address">Refresh</button>
+  </ul>
+  <br>
+  <input class="btn btn-primary btn-block" type="submit" id="choose-address">
+</form>
+</div>
+
+<% include footer %>
