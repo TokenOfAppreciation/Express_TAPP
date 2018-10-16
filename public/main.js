@@ -14,10 +14,10 @@ ContractHandler = {
     ContractHandler.initTapEventListener();
     ContractHandler.updateAll();
   }
-  , initAssign : () => {
-    ContractHandler.initWeb3();
-    ContractHandler.initDefaultAccount();
-  }
+  // , initAssign : () => {
+  //   ContractHandler.initWeb3();
+  //   ContractHandler.initDefaultAccount();
+  // }
   , initContract : function (){
     // Initialize Contract
     TAP = web3.eth.contract(TAPabi);
@@ -131,6 +131,7 @@ const ViewController = {
     document.getElementById('UserAddress').innerHTML = account;
   }
   ,setCurrentAccountForm : (account) => {
+    console.log("Set Form was called.");
     document.getElementById('UserAddressForm').value = account;
   }
   , setBlockNumber : (bs, blocknumber) => {
@@ -175,6 +176,7 @@ const ViewController = {
   , initIndex : () => {
     // -- init -------
     ViewController.setCurrentAccount(web3.eth.accounts[0]);
+    ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
     web3.eth.getBlockNumber(ViewController.setBlockNumber);
     ViewController.setNetwork(web3.version.network);
     ViewController.initTimer();
@@ -191,10 +193,10 @@ const ViewController = {
       }
     });
   }
-  , initAssign : () => {
-    ViewController.initRefreshButtonListener();
-    ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
-  }
+  // , initAssign : () => {
+  //   ViewController.initRefreshButtonListener();
+  //   ViewController.setCurrentAccountForm(web3.eth.accounts[0]);
+  // }
   , timer : null
   // , fillAddressChooser : () =>{
   //   let dnAddressChooser = document.getElementById('MetaMaskAddressChooser');
@@ -220,17 +222,13 @@ window.addEventListener('load', function() {
     console.log("I'm on the index page.");
     ViewController.initIndex();
     ContractHandler.initIndex();
-  } else if (dnBody[0].className === 'assign') {
-    console.log("I'm on the assignment page.");
-    ViewController.initAssign();
-    ContractHandler.initAssign();
   }
-
-
+  // else if (dnBody[0].className === 'assign') {
+  //   console.log("I'm on the assignment page.");
+  //   ViewController.initAssign();
+  //   ContractHandler.initAssign();
+  // }
 });
-
-
-
 
 //---- Debug button
 // document.getElementById('debug').addEventListener('click', function(){

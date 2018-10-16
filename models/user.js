@@ -3,7 +3,7 @@ const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = mongoose.Schema({
   email: {type: String, required: true},
-  assigned: {type: Boolean},
+  assigned: {type: Boolean, default: false},
   address: {type: String}
 });
 

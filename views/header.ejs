@@ -5,10 +5,23 @@
       <nav class="z-depth-0">
        <div class="nav-wrapper pink lighten-2">
          <a href="#!" class="brand-logo"><i class="material-icons">keyboard_tab</i>Token of Appreciation</a>
-           <ul class="right hide-on-med-and-down">
-             <li><a href="sass.html">Home</a></li>
-             <li><a href="assign.html">Assign</a></li>
-           </ul>
+         <ul class="navbar-nav mr-auto" id="nav-bound-right">
+           <!--<li class="nav-item active"> -->
+           <li class = "nav-item">
+             <a class="nav-link" href="/">Home <!-- <span class="sr-only">(current)</span> --></a>
+           </li>
+           <% if (login == true && addressAssigned != true){ %>
+           <li class="nav-item">
+             <a class="nav-link" href="/assign">Assign Address</a>
+           </li>
+           <% } %>
+
+           <% if (login == false){ %>
+           <li class="nav-item">
+             <a class="nav-link" href="/auth/facebook">Login</a>
+           </li>
+           <% } %>
+         </ul>
        </div>
      </nav>
   </div>

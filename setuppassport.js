@@ -8,7 +8,7 @@ const credentials = {
   "facebook": {
     app_id:"562977827370286"
     ,app_secret:"09a366d73b8f7e0e67d6dc27f8bb97ad"
-    ,callback:"http://localhost:3000/auth/facebook/callback"
+    ,callback:"http://185.243.9.118:8080/auth/facebook/callback"
   }
 }
 
@@ -17,7 +17,7 @@ module.exports = function (){
   passport.use(new FacebookStrategy({
     clientID: "562977827370286",
     clientSecret: "09a366d73b8f7e0e67d6dc27f8bb97ad",
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    callbackURL: "http://185.243.9.118:8080/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'emails', 'third_party_id'],
     // passReqToCallback : true,
     enableProof: true,
